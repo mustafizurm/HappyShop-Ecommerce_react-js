@@ -1,0 +1,36 @@
+form{
+    border-radius: 10px;
+}
+
+
+.form{
+    padding: 16px 17px;
+}
+
+
+input{
+    outline: none;
+    padding: 1px 5px;
+}
+
+.loginBtn{
+    /* margin-top: 40px; */
+    margin: 0px auto;
+    margin-top: 20px;
+    /* width: 50px; */
+    display:block;
+    background-color: red;
+    padding: 4px 40px;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.forgetPassword{
+    margin-top: 18px;
+}
+
+.footer{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
