@@ -1,0 +1,11 @@
+.customStyle{
+	min-height: calc(100vh - 152px);
+}
+
+.customMaxWidth{
+	max-height: calc(100vh - 152px);
+	overflow: auto;
+	scroll-behavior: smooth;
+	scroll-snap-type: mandatory;
+	/* scrollbar-width: none; */
+}
