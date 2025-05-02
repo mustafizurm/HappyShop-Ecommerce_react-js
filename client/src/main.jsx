@@ -3,13 +3,16 @@ import "./index.css";
 import App from "./App.jsx";
 import { RouterProvider } from "react-router-dom";
 import router from "./route/route.jsx";
-import UserProvider from "./context/useUserContext.jsx";
+import UseProvider from "./context/UseContext.jsx";
+// import UseProvider from "./context/UseContext.jsx";
+// import UserProvider from "./context/UsersContext.jsx";
 
 
 createRoot(document.getElementById("root")).render(
-    <UserProvider>
+     <UseProvider>
         <RouterProvider router={router}>
             <App />
         </RouterProvider>
-    </UserProvider>
+     </UseProvider>
+
 );

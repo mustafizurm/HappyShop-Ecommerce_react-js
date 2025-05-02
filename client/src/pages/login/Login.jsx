@@ -1,13 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/css/login/login.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { userContext } from "../../context/useUserContext";
-import { userLoginFunck } from "../../helper/allApi";
-
+import UsePostRequest from "../../helper/usePostRequest";
+import UseGetRequest from "../../helper/UseGetRequest";
 const Login = () => {
-    const { fetchCurrentUser } = useContext(userContext);
-
+    const {get_Refetch} = UseGetRequest("http://localhost:5000/api/user/currentUserDetails")
+    const {data, error, isLoading, post_Refetch} = UsePostRequest("http://localhost:5000/api/user/login")
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: "", password: "" });
     // handelChange
@@ -17,25 +16,27 @@ const Login = () => {
     // handel Submit
     const submitHandel = async (e) => {
         e.preventDefault();
-		const response = await userLoginFunck(formData)
-		if(response?.success){
-			fetchCurrentUser()
-			navigate("/")
-		} else{
-			console.log(response?.message)
-		}
+       const result = await post_Refetch(formData)
+       if(result){
+        localStorage.setItem("user", JSON.stringify(result)); // or whatever field has the user
+        navigate("/")
+        get_Refetch()
+       }
     };
-
-
     return (
-        <section className="w-[100%]  bg-gray-200 flex justify-center items-center customStyle">
+        <section className="flex justify-center items-center bg-gray-200"            style={{
+            minHeight: 'calc(100vh - 154px)'
+          }}>
             <form
                 action=""
                 onSubmit={(e) => {
                     submitHandel(e);
+                    console.log(formData)
                 }}
-                className="form bg-white min-h-full"
+                className="w-[250px] lg:w-[260px] form bg-white"
+    
             >
+                <h4 className="text-red-500">{error}</h4>
                 <label htmlFor="">
                     <span>Email</span>
                     <input
@@ -44,11 +45,11 @@ const Login = () => {
                         onChange={(e) => {
                             handelChange(e);
                         }}
-                        className="bg-gray-200 text-gray-800 text-[14px] w-[100%] rounded-sm"
+                        className="bg-gray-200 text-gray-800 mt-2 text-[14px] w-[100%] rounded-sm"
                     />
-                </label>{" "}
-                <br />
-                <label htmlFor="">
+                </label>
+                <br /> 
+                <label htmlFor="" className="">
                     <span>Password</span> <br />
                     <input
                         type="password"
@@ -56,7 +57,7 @@ const Login = () => {
                         onChange={(e) => {
                             handelChange(e);
                         }}
-                        className="bg-gray-200 text-gray-800 text-[14px] w-[100%] rounded-sm"
+                        className="bg-gray-200 text-gray-800 mt-2 text-[14px] w-[100%] rounded-sm"
                     />
                 </label>
                 <p className="text-right forgetPassword cursor-pointer text-[14px]">

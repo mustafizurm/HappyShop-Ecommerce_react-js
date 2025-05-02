@@ -1,10 +1,13 @@
 import React from 'react';
+import CategoryList from '../../components/home/CategoryList';
+import HorizontolProductCategory from '../../components/home/HorizontolProductCategory';
 
 const Home = () => {
   return (
-    <div className='text-2xl'>
-      Home Page
-    </div>
+    <>
+      <CategoryList />
+      <HorizontolProductCategory />
+    </>
   );
 }
 

@@ -1,42 +1,55 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import { userContext } from "../../context/useUserContext";
 import { useNavigate } from "react-router-dom";
-import { userLogOutFunck } from "../../helper/allApi";
+import UseGetRequest from "../../helper/UseGetRequest";
 
 const Header = () => {
-	const navigate = useNavigate();
-
-    const { currentUser, fetchCurrentUser } = useContext(userContext);
-	const [menu, setMenu] = useState(false);
-
-	const [updateUser, setUpdateUser] = useState({
-		name: '',
-		email: '',
-		role: '',
-		userId: ''
-	})
-
-
-	useEffect(() => {
-		fetchCurrentUser()
-	}, []);
-
-
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user)
+    const [logoutMessage, setLogoutMessage] = useState(null)
+    const [logoutError, setLogOutError] = useState(null)
+    const {data, get_Refetch} = UseGetRequest("http://localhost:5000/api/user/currentUserDetails")
+    useEffect(()=> {
+        get_Refetch()
+    }, [])
+    const navigate = useNavigate();
+    const [menu, setMenu] = useState(false);
+    const [updateUser, setUpdateUser] = useState({
+        name: '',
+        email: '',
+        role: '',
+        userId: ''
+    })
     const handelLogoutFunck = async () => {
-		const response = await userLogOutFunck()
-		if(response.success){
-			fetchCurrentUser()
-			navigate("/login")
-		} else{
-			console.log(response)
-		}
+        try {
+            const response = await fetch("http://localhost:5000/api/user/logout", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "Application/json"
+                },
+                credentials: "include"
+            })
+
+            const data = await response.json()
+            if(!response.ok){
+                setLogOutError(data.message)
+            } else{
+                setLogOutError(null)
+                setLogoutMessage(data.message)
+                navigate("/login")
+                localStorage.removeItem("user");
+                // get_Refetch()
+            }
+        } catch (error) {
+            setLogoutMessage("Network Problem")
+        }
     };
 
+
     return (
-        <header className="w-[100%] h-[100%]">
-            <nav className="w-[90%] md:w-[80%] h-[100%] bg-white grid grid-cols-2 md:grid-cols-3 ">
+        <header className="">
+            <nav className="w-[96%] md:w-[710px] lg:w-[1010px] xl:w-[1240px] m-auto bg-white grid grid-cols-2 md:grid-cols-3">
                 {/* logo */}
                 <Link to={`/`}>
                     <div className=" text-2xl lg:text-4xl">
@@ -57,7 +70,7 @@ const Header = () => {
                 {/* login, logout, addToCart, dashboard */}
                 <div className="flex justify-end items-center gap-7">
                     {/* dashboard only for login */}
-                    {currentUser?.success === true ? (
+                    {user?.role === "User" ? (
                         <div className="relative">
                             <i
                                 className="fa-solid fa-user cursor-pointer"
@@ -95,17 +108,13 @@ const Header = () => {
                     </div>
 
                     <div>
-                        {currentUser?.success === true ? (
-                            <Link to={`/login`}>
-                                <button
-                                    onClick={() => {
-                                        handelLogoutFunck();
-                                    }}
-                                    className="login_Btn cursor-pointer bg-red-600 text-[16px] text-white rounded-[16px]"
-                                >
-                                    Logout
-                                </button>
-                            </Link>
+                        {user ? (
+                            <button
+                                onClick={handelLogoutFunck}
+                                className="login_Btn cursor-pointer bg-red-600 text-[16px] text-white rounded-[16px]"
+                            >
+                                Logout
+                            </button>
                         ) : (
                             <Link to={`/login`}>
                                 <button className="login_Btn cursor-pointer bg-red-600 text-[16px] text-white rounded-[16px]">

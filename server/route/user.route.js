@@ -11,7 +11,7 @@ Router.get("/user/currentUserDetails", Auth, getSingleUserDetails)
 
 
 // admin
-Router.get("/admin/allUser", getAllUsers)
-Router.put("/admin/userRoleUpdate", getUserRoleUpdate)
+Router.get("/admin/allUser", Auth, getAllUsers)
+Router.put("/admin/userRoleUpdate", Auth, getUserRoleUpdate)
 
 module.exports = Router;

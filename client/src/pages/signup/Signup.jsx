@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import "../../assets/css/signup/Signup.css";
-
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { userSignupFunck } from "../../helper/allApi";
-
+import UsePostRequest from "../../helper/usePostRequest";
 const Signup = () => {
+    const {data, error, isLoading, post_Refetch} = UsePostRequest("http://localhost:5000/api/user/signup")
 	const navigate = useNavigate()
-
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -17,33 +15,27 @@ const Signup = () => {
     const handelChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-
         setFormData({ ...formData, [name]: value });
     };
-
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-		const response = await userSignupFunck(formData)
-		console.log(response)
-		if(response?.success){
-			navigate("/login")
-		} else{
-			console.log(response?.message)
-		}
+        const result =  await post_Refetch(formData)
+        if(result){
+            navigate("/login")
+        }
     };
-
-
     return (
-        <section className="w-[100%] customStyle flex justify-center items-center bg-gray-200">
+        <section className="flex justify-center items-center bg-gray-200"            style={{
+            minHeight: 'calc(100vh - 154px)'
+          }}>
             <form
                 action=""
                 onSubmit={(e) => {
                     handleSubmit(e);
                 }}
-                className="w-[60%] md:w-[50%] lg:w-[20%] bg-white form"
+                className="w-[300px] bg-white form"
             >
+                <h4 className="text-red-500">{error}</h4>
                 <label htmlFor="" className="flex flex-col">
                     <span>Name:</span>
                     <input
@@ -52,6 +44,7 @@ const Signup = () => {
                         onChange={(e) => {
                             handelChange(e);
                         }}
+                        value={formData.name}
                         className="bg-gray-200 text-gray-800 text-[14px]  w-[100%] rounded-sm"
                     />
                 </label>
@@ -63,6 +56,7 @@ const Signup = () => {
                         onChange={(e) => {
                             handelChange(e);
                         }}
+                        value={formData.email}
                         className="bg-gray-200 text-gray-800 text-[14px]  w-[100%] rounded-sm"
                     />
                 </label>
@@ -74,6 +68,7 @@ const Signup = () => {
                         onChange={(e) => {
                             handelChange(e);
                         }}
+                        value={formData.password}
                         className="bg-gray-200 text-gray-800 text-[14px]  w-[100%] rounded-sm"
                     />
                 </label>
@@ -85,6 +80,7 @@ const Signup = () => {
                         onChange={(e) => {
                             handelChange(e);
                         }}
+                        value={formData.confirmPassword}
                         className="bg-gray-200 text-gray-800 text-[14px] w-[100%] rounded-sm"
                     />
                 </label>
