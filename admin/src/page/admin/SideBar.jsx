@@ -1,4 +1,5 @@
 import React from 'react'
+import "../../assets/css/admin.css"
 import adminPic from "../../assets/images/admin.png"
 
 import "../../assets/css/admin.css"
@@ -6,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const SideBar = ({style, crossBtn, menu, setMenu}) => {
     return (
-        <div className={style+`relative`}>
+        <div className={style+`relative sideBar_container`}>
             <div className='flex justify-center items-center flex-col'>
                 <img className='w-[80px] h-[80px]' src={adminPic} alt="" />
                 <h3 className='font-bold mt-[8px]'>Admin</h3>

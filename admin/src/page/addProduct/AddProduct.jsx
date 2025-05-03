@@ -25,10 +25,11 @@ const AddProduct = () => {
           </select>
         </label>
         <label htmlFor="">Product Image:</label>
-        <label htmlFor="uploadImage">
+        <label htmlFor="uploadImage" className='relative'>
           <div className='w-[100%] h-[200px] bg-gray-200'>
             <input type="file" name="" id="uploadImage" className='hidden' />
           </div>
+          <i className="fa-solid fa-upload absolute top-[50%] left-[50%] transform translate-[-50%] text-7xl"></i>
         </label>
         <p className='text-red-700'>*Please Upload Product Image</p>
         <div className='flex gap-2'>
