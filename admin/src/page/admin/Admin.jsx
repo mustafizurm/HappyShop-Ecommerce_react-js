@@ -12,7 +12,7 @@ const Admin = () => {
     <section>
       <div className='w-[96%] lg:flex m-auto relative'>
         {
-          menu === false ?<button onClick={()=> {setMenu(true)}} className='absolute right-8 top-2 bg-white rounded-4xl lg:hidden p-[16px] flex justify-center items-center shadow-2xl cursor-pointer'><i className="fa-solid fa-bars"></i></button> : ""
+          menu === false ?<button onClick={()=> {setMenu(true)}} className='absolute right-8 top-2 bg-white rounded-4xl lg:hidden p-[16px] flex justify-center items-center shadow-2xl cursor-pointer z-50'><i className="fa-solid fa-bars"></i></button> : ""
         }
 
         {/* sidebar */}

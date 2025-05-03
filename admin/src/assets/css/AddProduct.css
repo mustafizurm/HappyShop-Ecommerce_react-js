@@ -1,0 +1,28 @@
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    padding: 30px;
+}
+
+form input, select{
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    outline: none;
+    padding: 4px 12px;
+}
+
+form select{
+    padding: 8px 5px;
+    font-weight: 300;
+    margin-top: 5px;
+}
+
+label span, label{
+    color: rgba(0, 0, 0, 0.6);
+}
+label input {
+    margin-top: 5px;
+    font-weight: 300;
+}
