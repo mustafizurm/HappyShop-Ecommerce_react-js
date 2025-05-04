@@ -5,6 +5,7 @@ import All_Users from "../page/users/All_Users"
 import Products from "../page/products/Products"
 import AddProduct from "../page/addProduct/AddProduct"
 import Login from "../page/login/Login"
+import Test from "../page/test/Test"
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
                     {
                         path: "admin/products",
                         element: <Products />
+                    },
+                    {
+                        path: "admin/test",
+                        element: <Test />
                     }
                 ]
             }

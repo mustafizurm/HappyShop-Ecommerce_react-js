@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <CategoryList />
-      <HorizontolProductCategory />
+      <HorizontolProductCategory heading={"Latest Product"} />
     </>
   );
 }
